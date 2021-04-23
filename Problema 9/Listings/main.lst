@@ -1,0 +1,107 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             codigo, CODE, READONLY, ALIGN=2
+    2 00000000                 THUMB
+    3 00000000                 EXPORT           Start
+    4 00000000         
+    5 00000000         Start
+    6 00000000 F04F 0000       LDR              R0, = 0
+    7 00000004 F04F 010A       LDR              R1, = 10    ;//INGRESE LA CANTI
+                                                            DAD DE MINUTOS DE L
+                                                            A LLAMADA
+    8 00000008 F04F 0201       LDR              R2, = 1
+    9 0000000C F04F 0303       LDR              R3, = 3
+   10 00000010 EEB6 0A00       VLDR.F32         S0, =0.5
+   11 00000014 EDDF 0A09       VLDR.F32         S1, =0.1
+   12 00000018 ED9F 1A09       VLDR.F32         S2, = 0
+   13 0000001C         
+   14 0000001C         Costo1
+   15 0000001C 4410            ADD              R0, R2
+   16 0000001E EE31 1A00       VADD.F32         S2, S0      ;Sumar 0.5 por cada
+                                                             minuto
+   17 00000022 4288            CMP              R0,R1
+   18 00000024 D008            BEQ              Loop
+   19 00000026         
+   20 00000026 4298            CMP              R0,R3       ;Si el costo es may
+                                                            or a 3, cobrar 0.1 
+                                                            
+   21 00000028 D000            BEQ              Costo2
+   22 0000002A         
+   23 0000002A D3F7            BLO              Costo1
+   24 0000002C         
+   25 0000002C         Costo2                               ; 
+   26 0000002C 4410            ADD              R0, R2
+   27 0000002E EE31 1A20       VADD.F32         S2, S1      ;Sumar 0.1 por cada
+                                                             minuto
+   28 00000032 4288            CMP              R0,R1
+   29 00000034 D000            BEQ              Loop
+   30 00000036 D3F9            BLO              Costo2
+   31 00000038         
+   32 00000038         Loop                                 ; Ciclo infinito.
+   33 00000038 E7FE            B                Loop
+   34 0000003A         
+   35 0000003A 00 00           ALIGN
+   36 0000003C                 END
+              3DCCCCCD 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\User
+s\dey_d\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:
+\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_V
+ERSION SETA 528" --predefine="TM4C123GH6PM SETA 1" --list=.\listings\main.lst m
+ain.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Costo1 0000001C
+
+Symbol: Costo1
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 23 in file main.s
+Comment: Costo1 used once
+Costo2 0000002C
+
+Symbol: Costo2
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 21 in file main.s
+      At line 30 in file main.s
+
+Loop 00000038
+
+Symbol: Loop
+   Definitions
+      At line 32 in file main.s
+   Uses
+      At line 18 in file main.s
+      At line 29 in file main.s
+      At line 33 in file main.s
+
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 5 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: Start used once
+codigo 00000000
+
+Symbol: codigo
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: codigo unused
+5 symbols
+341 symbols in table
